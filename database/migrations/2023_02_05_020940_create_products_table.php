@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
+            $table->string('name', 75);
             $table->string('description', 255)->nullable();
             $table->string('barcode', 15)->nullable();
-            $table->unsignedDecimal('listprice', 5, 2);
+            $table->unsignedDecimal('list_price', 5, 2);
             $table->tinyInteger('revenue', false, true);
             $table->unsignedDecimal('price', 5, 2);
             $table->foreignId('provider_id')->default(1)->constrained()->onDelete('cascade');
