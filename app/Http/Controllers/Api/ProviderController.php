@@ -27,17 +27,16 @@ class ProviderController extends Controller
         {
             try {
                 $data = Provider::paginate($request->header('paginate'));
-                return response()->json($data,200);
             } catch (Throwable $error) {
-                return response()->json('Parametro de paginación incorrecto', 400);
+                return response()->json('Error durante la paginación', 400);
             }
         }
         //Si no, devolvemos todos los proveedores.
         else
         {
             $data = Provider::get()->all();
-            return response()->json($data, 200);
         }
+        return response()->json($data, 200);
     }
 
     /**
@@ -55,20 +54,18 @@ class ProviderController extends Controller
                 $products = Product::with('provider')
                 ->where('provider_id', $provider->id)
                 ->paginate($request->header('paginate'));
-                return response()->json($products, 200);            
             } catch (Throwable $error) {
-                return response()->json('Parametro de paginación incorrecto', 400);
+                return response()->json('Error durante la paginación', 400);
             }
         }
         //Si no, devolvemos todos los productos.
         else
         {
-            $products = Product::with/*Por el momento usamos las mismas reglas de validación
-            ya que se trata de un controlador simple.*/('provider')
+            $products = Product::with('provider')
             ->where('provider_id', $provider->id)
-            ->get();
-            return response()->json($products, 200);            
+            ->get();            
         }
+        return response()->json($products, 200);
     }
 
     /**Devuelve los datos de un proveedor */

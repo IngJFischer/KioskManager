@@ -20,9 +20,15 @@ class Product extends Model
         'provider_id',
     ];
 
-    //Relación muchos a uno productos->proveedor.
+    //Relación muchos a uno Productos->Proveedor.
     public function Provider()
     {
         return $this->belongsTo(Provider::class);
+    }
+
+    //Relación uno a uno Producto->Stock
+    public function Stock()
+    {
+        return $this->hasOne(Stock::class);
     }
 }

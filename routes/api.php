@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Rutas de proveedor
 Route::get('provider/products', [ProviderController::class, 'getProducts']);
 Route::resource('provider', ProviderController::class)->except(['create', 'edit']);
+
+//Rutas de Producto
+Route::resource('product', ProductController::class)->except(['create', 'edit']);
