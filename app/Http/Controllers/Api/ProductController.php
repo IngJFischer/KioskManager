@@ -76,6 +76,5 @@ class ProductController extends Controller
         $product->delete();
         return response()->json('Producto Eliminado', 200);
     }
-
-    //Falta agregar el método updateStock()
+    
 }

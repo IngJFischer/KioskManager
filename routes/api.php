@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\StockController;
 
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProviderController;
 
 /*
@@ -27,3 +28,10 @@ Route::resource('provider', ProviderController::class)->except(['create', 'edit'
 
 //Rutas de Producto
 Route::resource('product', ProductController::class)->except(['create', 'edit']);
+
+//Rutas de manejo de Stock
+Route::prefix('/stock')->controller(StockController::class)->group(function () {
+    Route::get('/{stock}', 'getStock');
+    Route::patch('/{stock}', 'setStock');
+    Route::patch('/modify/{stock}', 'modifyStock');
+});
