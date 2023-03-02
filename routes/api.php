@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\StockController;
 
+use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProviderController;
 
@@ -30,8 +30,8 @@ Route::resource('provider', ProviderController::class)->except(['create', 'edit'
 Route::resource('product', ProductController::class)->except(['create', 'edit']);
 
 //Rutas de manejo de Stock
-Route::prefix('/stock')->controller(StockController::class)->group(function () {
-    Route::get('/{stock}', 'getStock');
-    Route::patch('/{stock}', 'setStock');
-    Route::patch('/modify/{stock}', 'modifyStock');
+Route::controller(StockController::class)->group(function () {
+    Route::get('stock/{stock:product_id}', 'getStock');
+    Route::patch('stock/{stock:product_id}', 'setStock');
+    Route::patch('stock/modify/{stock:product_id}', 'modifyStock');
 });

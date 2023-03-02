@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Stock;
+namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
@@ -26,18 +28,14 @@ class PutRequest extends FormRequest
         
     }
 
-    protected function prepareForValidation()
-    {
-        /*Como en el request no pasaremos 'product_id', preparamos los datos
-        obteniendolos de la ruta que hace este request*/
-        $this->merge(['product_id' => $this->route('stock')->product_id]);
-    }
-
+    /**
+     * Reglas de validación:
+     * quantity: requerido, mínimo valor 0.
+     */
     public function rules()
     {
         return [
-            'product_id' => 'required|unique:stocks,product_id,'.$this->route('stock')->id,
-            'quantity' => 'required|numeric|min:0',
+            'quantity' => 'required|min:0'
         ];
     }
 }

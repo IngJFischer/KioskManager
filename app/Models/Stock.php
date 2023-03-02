@@ -14,6 +14,12 @@ class Stock extends Model
         'quantity',
     ];
 
+    //Método para cambiar la key del modelo de 'id' a 'product_id'
+    public function getRouteKeyName():string
+    {
+        return 'product_id';
+    }
+
     //Relación uno a uno inversa Stock->Producto
     public function Product()
     {
