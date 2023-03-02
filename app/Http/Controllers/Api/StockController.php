@@ -34,9 +34,13 @@ class StockController extends Controller
         $available = $stock->quantity;
         $remanent = $available + $validated['quantity'];
 
-        if ($remanent>0)
+        
+        if ($remanent>=0)
         {
-            //Hacer la modificación del stock.
+            $request->replace(['quantity' => $remanent]);
+            $request->merge(['product_id' => $stock->getRouteKey()]);
+            //Funcionara?
+            return $this->setStock(PutRequest::createFrom($request), $stock);
         }
         else
         {
