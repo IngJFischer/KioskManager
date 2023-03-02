@@ -31,6 +31,7 @@ Route::resource('product', ProductController::class)->except(['create', 'edit'])
 
 //Rutas de manejo de Stock
 Route::controller(StockController::class)->group(function () {
+    Route::get('stock/check/{stock:product_id}', 'checkStock');
     Route::get('stock/{stock:product_id}', 'getStock');
     Route::patch('stock/{stock:product_id}', 'setStock');
     Route::patch('stock/modify/{stock:product_id}', 'modifyStock');

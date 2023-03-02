@@ -22,6 +22,7 @@ class StockController extends Controller
     /** Estableceel Stock de un determinado producto */
     public function setStock(PutRequest $request, Stock $stock)
     {
+        //return response()->json($request->getContent());
         $stock -> update($request->validated());
         return response()->json($stock, 200);
     }
@@ -29,39 +30,39 @@ class StockController extends Controller
     /** Modifica el Stock de un determinado producto verificando la disponibilidad del mismo*/
     public function modifyStock(Request $request, Stock $stock)
     {
+        //Validamos el request
         $validated = $request->validate(['quantity' => 'required|numeric']);
         
+        //Comprobamos que haya stock suficiente
         $available = $stock->quantity;
         $remanent = $available + $validated['quantity'];
 
-        
         if ($remanent>=0)
         {
-            $request->replace(['quantity' => $remanent]);
-            $request->merge(['product_id' => $stock->getRouteKey()]);
-            //Funcionara?
-            return $this->setStock(PutRequest::createFrom($request), $stock);
+            //Si hay stock suficiente, seteamos el Stock en la cantidad resultante
+            $data = ['product_id' => $stock->getRouteKey(),
+                    'quantity' => $remanent];
+            $stock -> update($data);
+            return response()->json($stock, 200);
         }
         else
         {
-            //Modificar como mandar el error de forma coherente con el resto de errores
+            //Si no hay stock suficiente, devolvemos el mensaje correspondiente
             return response()->json('No hay stock suficiente', 400);
         }
     }
 
     /** Comprueba la disponibilidad de un producto según la cantidad solicitada */
-    private function checkAvalability(Stock $stock, $quantity)
+    public function checkStock(Request $request, Stock $stock)
     {
-        $available = $stock->quantity;
-        $availableQuantity = $available + $quantity;
-
-        if ($availableQuantity >= 0)
+        $data = $request->validate(['quantity' => 'bail|required|numeric|min:0']);
+        if ($data['quantity'] > $stock->quantity)
         {
-            return $availableQuantity;
+            return response()->json(false, 200);
         }
         else
         {
-            return false;
+            return response()->json(true, 200);
         }
     }
 
