@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProviderController;
+use App\Http\Controllers\Api\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Rutas de proveedor
 Route::get('provider/products', [ProviderController::class, 'getProducts']);
-Route::resource('provider', ProviderController::class)->except(['create', 'edit']);
+Route::apiResource('provider', ProviderController::class);
 
 //Rutas de Producto
-Route::resource('product', ProductController::class)->except(['create', 'edit']);
+Route::apiResource('product', ProductController::class);
 
 //Rutas de manejo de Stock
 Route::controller(StockController::class)->group(function () {

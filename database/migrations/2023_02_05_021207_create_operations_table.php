@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('operations', function (Blueprint $table) {
             $table->id();
-            $table->json('item');
+            $table->enum('type', ['sale','purchase']);
+            $table->unsignedDecimal('costs', 8, 2)->nullable();
             $table->unsignedDecimal('total', 8, 2);
-            $table->enum('payment_method', ['0','1']);
             $table->timestamps();
         });
     }

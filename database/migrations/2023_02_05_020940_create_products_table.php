@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedDecimal('list_price', 5, 2);
             $table->tinyInteger('revenue', false, true);
             $table->foreignId('provider_id')->default(1)->constrained()->onDelete('cascade');
-            $table->enum('unit_sale', ['yes', 'no']);
             $table->timestamps();
         });
     }
