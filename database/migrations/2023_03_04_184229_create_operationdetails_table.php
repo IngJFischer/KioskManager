@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('operationsdetails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('operation_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('no action');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->tinyInteger('quantity', false, true);
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchasedproducts');
+        Schema::dropIfExists('operationsdetails');
     }
 };

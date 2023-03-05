@@ -41,7 +41,7 @@ class Product extends Model
     //Accesor para obtenerl el precio de un producto.
     public function getPriceAttribute()
     {
-        //El precio se calcula como list_price * (100 + revenue)/100)
-        return ($this->list_price * (100 + $this->revenue)/100);
+        //El precio se calcula como list_price * (100 + revenue)/100) y se devuelve redondeado a 2 lugares decimales
+        return number_format((float)$this->list_price * (100 + $this->revenue)/100, 2, '.', '');
     }
 }

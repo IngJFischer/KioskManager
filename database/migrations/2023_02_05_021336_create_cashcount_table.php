@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('cashcount', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('operation_id')->constrained()->onDelete('cascade');
             $table->unsignedDecimal('total', 10, 2);
             $table->unsignedDecimal('costs', 10, 2);
-            $table->enum('closed', ['yes','no'])->default('no');
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ class PutRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge(['name' => Str::title($this->name)]);
+        $this->merge(['list_price' => number_format((float)$this->list_price, 2, '.', '')]);
     }
 
     public function rules()
@@ -40,9 +41,7 @@ class PutRequest extends FormRequest
             'barcode' => 'numeric|min:10|max:15',
             'list_price' => 'bail|required|decimal:2,3|min:0|not_in:0',
             'revenue' => 'required|numeric|min:0',
-            'price' => 'required|numeric|min:0|not_in:0',
             'provider_id' => 'required|integer',
-            'unit_sale' => 'required',
         ];
     }
 }

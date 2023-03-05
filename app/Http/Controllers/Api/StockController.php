@@ -33,15 +33,11 @@ class StockController extends Controller
         //Validamos el request
         $validated = $request->validate(['quantity' => 'required|numeric']);
         
-        //Comprobamos que haya stock suficiente
-        $available = $stock->quantity;
-        $remanent = $available + $validated['quantity'];
-
-        if ($remanent>=0)
+        if ($stock->checkStock($validated['quantity']))
         {
             //Si hay stock suficiente, seteamos el Stock en la cantidad resultante
             $data = ['product_id' => $stock->getRouteKey(),
-                    'quantity' => $remanent];
+                    'quantity' => $stock->quantity + $validated['quantity']];
             $stock -> update($data);
             return response()->json($stock, 200);
         }
@@ -55,15 +51,16 @@ class StockController extends Controller
     /** Comprueba la disponibilidad de un producto según la cantidad solicitada */
     public function checkStock(Request $request, Stock $stock)
     {
-        $data = $request->validate(['quantity' => 'bail|required|numeric|min:0']);
-        if ($data['quantity'] > $stock->quantity)
+        $validated = $request->validate(['quantity' => 'required|numeric|min:0']);
+        return response()->json($stock->checkStock($validated['quantity']), 200);
+        /*if ($validated['quantity'] > $stock->quantity)
         {
             return response()->json(false, 200);
         }
         else
         {
             return response()->json(true, 200);
-        }
+        }*/
     }
 
 }

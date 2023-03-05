@@ -6,7 +6,6 @@ use Throwable;
 
 use App\Models\Stock;
 use App\Models\Product;
-use App\Models\Provider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\PutRequest;

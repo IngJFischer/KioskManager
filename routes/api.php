@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProviderController;
-use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\OperationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +37,6 @@ Route::controller(StockController::class)->group(function () {
     Route::patch('stock/{stock:product_id}', 'setStock');
     Route::patch('stock/modify/{stock:product_id}', 'modifyStock');
 });
+
+//Rutas de Operaciones
+Route::apiResource('operation', OperationController::class);

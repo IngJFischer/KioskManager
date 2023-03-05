@@ -25,5 +25,20 @@ class Stock extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    //Metodo para chequear que el valor disponible de Stock sea mayor al de una modificación
+    public function checkStock($quantity)
+    {
+        //El valor quantity es la cantidad que queremos modificar en el stock
+        //Posee signo positivo si se agraga en el stock y negativo si se quita del stock
+        if ($this->quantity + $quantity >= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
